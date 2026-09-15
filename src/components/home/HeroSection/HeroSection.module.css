@@ -1,0 +1,275 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - var(--header-height));
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      var(--color-primary-soft),
+      transparent 32rem
+    ),
+    var(--color-background);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(22rem, 0.9fr);
+  align-items: center;
+  gap: var(--space-16);
+  width: min(100% - (var(--page-padding) * 2), var(--content-width));
+  min-height: calc(100vh - var(--header-height));
+  margin-inline: auto;
+  padding-block: var(--space-16);
+}
+
+.content {
+  max-width: 42rem;
+}
+
+.eyebrow {
+  margin-bottom: var(--space-5);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  color: var(--color-secondary);
+}
+
+.title span {
+  color: var(--color-primary);
+}
+
+.description {
+  max-width: 38rem;
+  margin-top: var(--space-6);
+  font-size: var(--font-size-lg);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.primaryButton {
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  box-shadow: var(--shadow-md);
+}
+
+.primaryButton:hover {
+  background: var(--color-primary-hover);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  border: 1px solid var(--color-border-dark);
+  background: var(--color-background);
+  color: var(--color-secondary);
+}
+
+.secondaryButton:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.learningOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-top: var(--space-10);
+}
+
+.learningOptions li {
+  position: relative;
+  padding-left: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.learningOptions li::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  content: "";
+  transform: translateY(-50%);
+}
+
+.visual {
+  position: relative;
+  display: grid;
+  min-height: 31rem;
+  place-items: center;
+}
+
+.visualAccent {
+  position: absolute;
+  width: min(100%, 29rem);
+  aspect-ratio: 1;
+  border-radius: 42% 58% 62% 38%;
+  background: var(--color-primary);
+  opacity: 0.09;
+  transform: rotate(-8deg);
+}
+
+.languageCard {
+  position: relative;
+  width: min(100%, 24rem);
+  padding: var(--space-10);
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: var(--radius-xl);
+  background: rgb(255 255 255 / 88%);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(1rem);
+}
+
+.japaneseText {
+  display: block;
+  color: var(--color-primary);
+  font-family: var(--font-japanese);
+  font-size: clamp(4rem, 9vw, 7rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.languageCard p {
+  margin-top: var(--space-4);
+  color: var(--color-secondary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.levels {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-8);
+}
+
+.levels span {
+  display: inline-flex;
+  min-width: 3rem;
+  min-height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--color-secondary-soft);
+  color: var(--color-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.supportCard {
+  position: absolute;
+  right: 0;
+  bottom: var(--space-10);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-secondary);
+  color: var(--color-text-light);
+  box-shadow: var(--shadow-md);
+}
+
+.supportCard span {
+  font-family: var(--font-japanese);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.supportCard p {
+  margin-top: var(--space-1);
+  color: rgb(255 255 255 / 72%);
+  font-size: var(--font-size-xs);
+}
+
+@media (max-width: 56rem) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    padding-top: var(--space-12);
+  }
+
+  .content {
+    max-width: 46rem;
+  }
+
+  .visual {
+    min-height: 25rem;
+  }
+
+  .supportCard {
+    right: 8%;
+  }
+}
+
+@media (max-width: 36rem) {
+  .hero {
+    min-height: auto;
+  }
+
+  .container {
+    min-height: auto;
+    padding-block: var(--space-12);
+  }
+
+  .description {
+    font-size: var(--font-size-base);
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+
+  .learningOptions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .visual {
+    min-height: 22rem;
+  }
+
+  .languageCard {
+    padding: var(--space-8);
+  }
+
+  .supportCard {
+    right: 0;
+    bottom: var(--space-4);
+  }
+}

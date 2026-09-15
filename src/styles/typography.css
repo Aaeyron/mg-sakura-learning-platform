@@ -1,0 +1,61 @@
+body {
+  color: var(--color-text);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-secondary);
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, var(--font-size-5xl));
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, var(--font-size-4xl));
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+  letter-spacing: -0.02em;
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+p {
+  color: var(--color-text-soft);
+  line-height: 1.75;
+}
+
+strong,
+b {
+  font-weight: var(--font-weight-bold);
+}
+
+small {
+  font-size: var(--font-size-sm);
+}
+
+::selection {
+  color: var(--color-secondary);
+  background: var(--color-primary-soft);
+}

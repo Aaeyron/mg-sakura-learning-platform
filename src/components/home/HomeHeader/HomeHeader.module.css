@@ -1,0 +1,217 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  height: var(--header-height);
+  border-bottom: 1px solid rgb(229 231 235 / 80%);
+  background: rgb(255 255 255 / 92%);
+  backdrop-filter: blur(1rem);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: min(100% - (var(--page-padding) * 2), var(--content-width));
+  height: 100%;
+  margin-inline: auto;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.brandMark {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  font-family: var(--font-japanese);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  box-shadow: var(--shadow-sm);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brandText strong {
+  color: var(--color-secondary);
+  font-size: var(--font-size-base);
+}
+
+.brandText small {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.desktopNavigation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin-left: auto;
+}
+
+.desktopNavigation a {
+  position: relative;
+  color: var(--color-text-soft);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.desktopNavigation a::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.5rem;
+  left: 0;
+  height: 2px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  content: "";
+  opacity: 0;
+  transform: scaleX(0);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.desktopNavigation a:hover {
+  color: var(--color-primary);
+}
+
+.desktopNavigation a:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.desktopActions {
+  display: flex;
+  align-items: center;
+  margin-left: var(--space-10);
+}
+
+.loginLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: var(--shadow-sm);
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.loginLink:hover {
+  background: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.mobileMenu {
+  display: none;
+  margin-left: auto;
+}
+
+.menuButton {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  color: var(--color-secondary);
+  cursor: pointer;
+  list-style: none;
+}
+
+.menuButton::-webkit-details-marker {
+  display: none;
+}
+
+.menuIcon {
+  display: flex;
+  width: 1.4rem;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.menuIcon span {
+  width: 100%;
+  height: 2px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+
+.menuLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.mobileNavigation {
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--page-padding) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-background);
+  box-shadow: var(--shadow-md);
+}
+
+.mobileNavigation a {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-soft);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.mobileNavigation a:hover {
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.mobileNavigation .mobileLoginLink {
+  margin-top: var(--space-2);
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  text-align: center;
+}
+
+@media (max-width: 48rem) {
+  .desktopNavigation,
+  .desktopActions {
+    display: none;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
+}
+
+@media (max-width: 24rem) {
+  .brandText small {
+    display: none;
+  }
+}
