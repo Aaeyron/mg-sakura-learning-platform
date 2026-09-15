@@ -7,9 +7,7 @@ export function HeroSection() {
     <section className={styles.hero}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <p className={styles.eyebrow}>
-            Japanese Language Training
-          </p>
+          <p className={styles.eyebrow}>Japanese Language Training</p>
 
           <h1 className={styles.title}>
             Learn Japanese.

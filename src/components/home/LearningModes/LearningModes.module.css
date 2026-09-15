@@ -1,0 +1,192 @@
+.section {
+  padding-block: var(--space-24);
+  background: var(--color-background);
+}
+
+.container {
+  width: min(100% - (var(--page-padding) * 2), var(--content-width));
+  margin-inline: auto;
+}
+
+.heading {
+  max-width: 42rem;
+  margin-bottom: var(--space-12);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-4);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.introduction {
+  margin-top: var(--space-5);
+  font-size: var(--font-size-lg);
+}
+
+.modeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.modeCard {
+  position: relative;
+  overflow: hidden;
+  min-height: 30rem;
+  padding: var(--space-8);
+  border-radius: var(--radius-xl);
+}
+
+.classroomCard {
+  background: var(--color-secondary);
+}
+
+.onlineCard {
+  border: 1px solid var(--color-border);
+  background: var(--color-primary-soft);
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 11rem;
+}
+
+.label {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.classroomCard .label {
+  background: rgb(255 255 255 / 12%);
+  color: var(--color-text-light);
+}
+
+.onlineCard .label {
+  background: var(--color-background);
+  color: var(--color-primary);
+}
+
+.japanese {
+  color: rgb(255 255 255 / 12%);
+  font-family: var(--font-japanese);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.onlineCard .japanese {
+  color: rgb(180 35 60 / 12%);
+}
+
+.cardContent {
+  position: relative;
+  z-index: 1;
+}
+
+.cardContent h3 {
+  font-size: var(--font-size-3xl);
+}
+
+.classroomCard .cardContent h3 {
+  color: var(--color-text-light);
+}
+
+.cardContent > p {
+  max-width: 32rem;
+  margin-top: var(--space-4);
+}
+
+.classroomCard .cardContent > p {
+  color: rgb(255 255 255 / 70%);
+}
+
+.onlineCard .cardContent > p {
+  color: var(--color-text-soft);
+}
+
+.benefitList {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+.benefitList li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.classroomCard .benefitList li {
+  color: rgb(255 255 255 / 86%);
+}
+
+.onlineCard .benefitList li {
+  color: var(--color-secondary);
+}
+
+.benefitList li span {
+  display: grid;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+}
+
+.classroomCard .benefitList li span {
+  background: rgb(255 255 255 / 12%);
+  color: var(--color-accent);
+}
+
+.onlineCard .benefitList li span {
+  background: var(--color-background);
+  color: var(--color-primary);
+}
+
+@media (max-width: 48rem) {
+  .section {
+    padding-block: var(--space-16);
+  }
+
+  .heading {
+    margin-bottom: var(--space-8);
+  }
+
+  .introduction {
+    font-size: var(--font-size-base);
+  }
+
+  .modeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .modeCard {
+    min-height: auto;
+  }
+
+  .cardTop {
+    min-height: 8rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .modeCard {
+    padding: var(--space-6);
+  }
+}

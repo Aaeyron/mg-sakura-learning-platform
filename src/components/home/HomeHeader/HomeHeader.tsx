@@ -21,11 +21,7 @@ export function HomeHeader() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <Link
-          href="/"
-          className={styles.brand}
-          aria-label="MG Sakura home"
-        >
+        <Link href="/" className={styles.brand} aria-label="MG Sakura home">
           <span className={styles.brandMark} aria-hidden="true">
             桜
           </span>
