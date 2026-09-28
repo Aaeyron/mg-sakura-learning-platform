@@ -11,6 +11,11 @@
   --color-accent: #dba63d;
   --color-accent-soft: #fff5df;
 
+  /* Sakura pink — light tints for backgrounds and highlights (not for text) */
+  --color-sakura-50: #fff7f9;
+  --color-sakura-100: #fdebf0;
+  --color-sakura-200: #f8d3de;
+
   /* Backgrounds */
   --color-background: #ffffff;
   --color-surface: #f7f8fa;

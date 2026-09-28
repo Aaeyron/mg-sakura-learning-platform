@@ -1,3 +1,119 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Our design tokens. These stay the single source of truth for colors,
+   fonts and radii — the homepage CSS Modules use them directly, and the
+   shadcn variables below point at them. */
 @import "../styles/tokens.css";
 @import "../styles/reset.css";
 @import "../styles/typography.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Tells Tailwind which utility classes exist (bg-primary, text-muted-foreground,
+   rounded-lg, ...) and which variable each one reads. */
+@theme inline {
+  --font-sans: var(--font-primary);
+  --font-heading: var(--font-primary);
+  --font-jp: var(--font-japanese); /* class: font-jp */
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* shadcn/ui variables, mapped onto tokens.css. To change a color, edit
+   tokens.css — not these lines.
+
+   Note: some token names (--color-primary, --color-border, --radius-md, ...)
+   are also Tailwind theme names. Tailwind puts its copies in a CSS layer,
+   and un-layered rules (tokens.css) always win, so the token values apply. */
+:root {
+  --background: var(--color-background);
+  --foreground: var(--color-text);
+  --card: var(--color-surface-raised);
+  --card-foreground: var(--color-text);
+  --popover: var(--color-surface-raised);
+  --popover-foreground: var(--color-text);
+
+  /* Crimson for main buttons and links */
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-text-light);
+
+  /* Light sakura pink for soft buttons, badges and highlights */
+  --secondary: var(--color-sakura-100);
+  --secondary-foreground: var(--color-primary-hover);
+  --accent: var(--color-sakura-50);
+  --accent-foreground: var(--color-text);
+
+  --muted: var(--color-surface);
+  --muted-foreground: var(--color-text-muted);
+  --destructive: var(--color-error);
+  --border: var(--color-border);
+  --input: var(--color-border-dark);
+  --ring: var(--color-sakura-200);
+  --radius: var(--radius-md);
+
+  --chart-1: var(--color-primary);
+  --chart-2: var(--color-sakura-200);
+  --chart-3: var(--color-info);
+  --chart-4: var(--color-accent);
+  --chart-5: var(--color-success);
+
+  --sidebar: var(--color-sakura-50);
+  --sidebar-foreground: var(--color-text);
+  --sidebar-primary: var(--color-primary);
+  --sidebar-primary-foreground: var(--color-text-light);
+  --sidebar-accent: var(--color-sakura-100);
+  --sidebar-accent-foreground: var(--color-text);
+  --sidebar-border: var(--color-border);
+  --sidebar-ring: var(--color-sakura-200);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
