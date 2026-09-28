@@ -24,15 +24,19 @@ One web platform with two sides:
 
 ## Tech stack
 
+**The stack is final: Next.js + Supabase + Vercel.** Don't suggest or add other
+backends, databases, auth providers or hosts.
+
 - **Next.js 16 (App Router) + TypeScript** — see the Next.js notes at the top of this file (from `AGENTS.md`). Check `node_modules/next/dist/docs/` before writing Next code. Known changes: `middleware.ts` is now **`proxy.ts`** (ours is `src/proxy.ts`); `cookies()` / `headers()` are async.
 - **Styling — two systems, on purpose:**
   - **Homepage** (`src/app/(public)/`, `src/components/home/`) uses **CSS Modules** + design tokens. Keep it that way; don't convert it to Tailwind.
   - **Portal and admin** (`(auth)`, `(student)`, `admin`) use **Tailwind CSS v4 + shadcn/ui** (`src/components/ui/`, add components with `npx shadcn@latest add <name>`).
   - **`src/styles/tokens.css` is the single source of truth** for colors, fonts and radii. The shadcn variables in `src/app/globals.css` point at the tokens — change colors in `tokens.css`, not in `globals.css`.
-- **Supabase**: Postgres database, Auth, Storage (for PDFs/worksheets/videos), Row Level Security
+- **Supabase**: Postgres database, Auth, Storage (PDFs/worksheets only — videos are YouTube links), Row Level Security
   - `src/lib/supabase/client.ts` — for Client Components
   - `src/lib/supabase/server.ts` — for Server Components / Server Actions / Route Handlers
   - `src/lib/supabase/proxy.ts` — session refresh, called from `src/proxy.ts`
+  - `src/lib/supabase/database.types.ts` — generated table types (don't edit by hand)
 - Deploy: **Vercel**
 - Repo: github.com/Aaeyron/mg-sakura-learning-platform
 
@@ -52,8 +56,36 @@ src/
   lib/supabase/      Supabase clients
   styles/            tokens.css, reset.css, typography.css
   proxy.ts           runs before each request (session refresh)
-supabase/migrations/ SQL migration files
+supabase/
+  migrations/       SQL migration files (structure only)
+  scripts/          test_rls.sql security check
+  config.toml       Supabase CLI config
 ```
+
+## Database rules
+
+- **Every structure change goes in a migration file** in `supabase/migrations/`: tables, columns, types, indexes, functions, triggers, RLS policies, storage buckets and storage policies. Never change structure in the Supabase dashboard.
+- The dashboard is only for **changing data by hand** (e.g. making someone an admin).
+- Never edit a migration that has already been pushed — write a new one.
+- Workflow (Supabase CLI, installed as a dev dependency):
+  - `npx supabase migration new <name>` — create a new migration file
+  - `npx supabase db push` — apply new migrations to the linked project
+  - `npx supabase gen types typescript --linked > src/lib/supabase/database.types.ts` — regenerate types after every schema change
+  - `npx supabase db query --linked -f supabase/scripts/test_rls.sql` — security check (rolls back; report comes back as the error message). Update it when rules change.
+- Helper functions for security rules live in the `private` schema (not exposed by the API) and are `security definer` with `set search_path = ''`.
+
+## Secrets and keys
+
+- `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` are safe in the browser (RLS protects the data).
+- `SUPABASE_SECRET_KEY` bypasses all security rules. Use it **only in server code** (Server Actions / Route Handlers) — never with a `NEXT_PUBLIC_` name, never imported by a client component. Files that use it start with `import "server-only";`.
+
+## Accounts and access decisions
+
+- **Admins create student accounts** (public sign-ups are turned off in the Supabase dashboard). The admin sets a temporary password; `profiles.must_change_password` is `true`, and the student must change it on first login. After a successful change the app calls `supabase.rpc("complete_password_change")`.
+- New accounts are always `student`. The role is never taken from sign-up data; admins are promoted by hand in the dashboard or by another admin.
+- Enrollment status: `active` → full read access to the class; `completed` → keeps read-only access to that class's materials; `dropped` → loses access. `inactive` accounts see only their own profile.
+- Students can edit only their own `full_name` and `phone` (enforced by a trigger).
+- **Videos are unlisted YouTube links** (`materials.external_url`), not uploads. PDFs and worksheets go in the **private** `materials` Storage bucket (20 MB limit) and are opened with short-lived signed URLs.
 
 ## Roles
 
