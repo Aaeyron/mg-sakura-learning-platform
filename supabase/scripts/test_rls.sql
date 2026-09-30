@@ -103,26 +103,26 @@ begin
     select count(*) into n from public.profiles;
     r := r || E'\n' || 'FAIL | [visitor] Cannot read profiles (read ' || n || ' rows)';
   exception when others then
-    r := r || E'\n' || 'PASS | [visitor] Cannot read profiles';
+    r := r || E'\n' || 'PASS | [visitor] Cannot read profiles' || ' → ' || sqlerrm;
   end;
   begin
     select count(*) into n from public.classes;
     r := r || E'\n' || 'FAIL | [visitor] Cannot read classes (read ' || n || ' rows)';
   exception when others then
-    r := r || E'\n' || 'PASS | [visitor] Cannot read classes';
+    r := r || E'\n' || 'PASS | [visitor] Cannot read classes' || ' → ' || sqlerrm;
   end;
   begin
     select count(*) into n from public.materials;
     r := r || E'\n' || 'FAIL | [visitor] Cannot read materials (read ' || n || ' rows)';
   exception when others then
-    r := r || E'\n' || 'PASS | [visitor] Cannot read materials';
+    r := r || E'\n' || 'PASS | [visitor] Cannot read materials' || ' → ' || sqlerrm;
   end;
   begin
     select count(*) into n from storage.objects where bucket_id = 'materials';
     r := r || E'\n' || (case when n = 0 then 'PASS' else 'FAIL' end)
       || ' | [visitor] Cannot see any stored files (saw ' || n || ')';
   exception when others then
-    r := r || E'\n' || 'PASS | [visitor] Cannot see any stored files';
+    r := r || E'\n' || 'PASS | [visitor] Cannot see any stored files' || ' → ' || sqlerrm;
   end;
 
   execute 'reset role';
@@ -145,19 +145,19 @@ begin
     update public.profiles set role = 'admin' where id = v_student;
     r := r || E'\n' || 'FAIL | [student] Cannot make themselves an admin';
   exception when others then
-    r := r || E'\n' || 'PASS | [student] Cannot make themselves an admin';
+    r := r || E'\n' || 'PASS | [student] Cannot make themselves an admin' || ' → ' || sqlerrm;
   end;
   begin
     update public.profiles set status = 'inactive' where id = v_student;
     r := r || E'\n' || 'FAIL | [student] Cannot change their account status';
   exception when others then
-    r := r || E'\n' || 'PASS | [student] Cannot change their account status';
+    r := r || E'\n' || 'PASS | [student] Cannot change their account status' || ' → ' || sqlerrm;
   end;
   begin
     update public.profiles set must_change_password = false where id = v_student;
     r := r || E'\n' || 'FAIL | [student] Cannot switch off "must change password" by editing the row';
   exception when others then
-    r := r || E'\n' || 'PASS | [student] Cannot switch off "must change password" by editing the row';
+    r := r || E'\n' || 'PASS | [student] Cannot switch off "must change password" by editing the row' || ' → ' || sqlerrm;
   end;
 
   update public.profiles set full_name = 'Hacked' where id = admin_id;
@@ -206,13 +206,13 @@ begin
     insert into public.courses (title, level) values ('Sneaky course', 'A1');
     r := r || E'\n' || 'FAIL | [student] Cannot create courses';
   exception when others then
-    r := r || E'\n' || 'PASS | [student] Cannot create courses';
+    r := r || E'\n' || 'PASS | [student] Cannot create courses' || ' → ' || sqlerrm;
   end;
   begin
     insert into public.enrollments (student_id, class_id) values (v_student, c_other);
     r := r || E'\n' || 'FAIL | [student] Cannot enroll themselves in a class';
   exception when others then
-    r := r || E'\n' || 'PASS | [student] Cannot enroll themselves in a class';
+    r := r || E'\n' || 'PASS | [student] Cannot enroll themselves in a class' || ' → ' || sqlerrm;
   end;
   begin
     update public.enrollments set status = 'active' where class_id = c_dropped;
@@ -220,7 +220,7 @@ begin
     r := r || E'\n' || (case when n = 0 then 'PASS' else 'FAIL' end)
       || ' | [student] Cannot un-drop themselves (change enrollment status)';
   exception when others then
-    r := r || E'\n' || 'PASS | [student] Cannot un-drop themselves (change enrollment status)';
+    r := r || E'\n' || 'PASS | [student] Cannot un-drop themselves (change enrollment status)' || ' → ' || sqlerrm;
   end;
   update public.classes set name = 'Hacked' where id = c_active;
   get diagnostics n = row_count;
@@ -234,19 +234,19 @@ begin
     insert into public.announcements (title, body) values ('Sneaky', 'x');
     r := r || E'\n' || 'FAIL | [student] Cannot post announcements';
   exception when others then
-    r := r || E'\n' || 'PASS | [student] Cannot post announcements';
+    r := r || E'\n' || 'PASS | [student] Cannot post announcements' || ' → ' || sqlerrm;
   end;
   begin
     insert into public.profiles (id, full_name) values (gen_random_uuid(), 'Fake');
     r := r || E'\n' || 'FAIL | [student] Cannot create profiles';
   exception when others then
-    r := r || E'\n' || 'PASS | [student] Cannot create profiles';
+    r := r || E'\n' || 'PASS | [student] Cannot create profiles' || ' → ' || sqlerrm;
   end;
   begin
     insert into storage.objects (bucket_id, name) values ('materials', 'rls-test/sneaky.pdf');
     r := r || E'\n' || 'FAIL | [student] Cannot upload files';
   exception when others then
-    r := r || E'\n' || 'PASS | [student] Cannot upload files';
+    r := r || E'\n' || 'PASS | [student] Cannot upload files' || ' → ' || sqlerrm;
   end;
 
   execute 'reset role';

@@ -175,14 +175,19 @@ create trigger on_auth_user_email_changed
   execute function private.sync_profile_email();
 
 -- ── API access ─────────────────────────────────────────────────────────────
--- Logged-out visitors (anon) get nothing. Logged-in users get table access,
--- and the RLS policies in the next migration decide which ROWS they see.
+-- The project has "Automatically expose new tables" OFF, so nothing is
+-- granted by default — every privilege is listed here on purpose.
+--   anon (logged-out visitors): nothing.
+--   authenticated (logged-in users): table access; the RLS policies in the
+--     next migration decide which ROWS each user can see or change.
+--   service_role (the server-only secret key): full access, used by Server
+--     Actions such as "create student account". It bypasses RLS.
 revoke all on
   public.profiles, public.courses, public.classes, public.enrollments,
   public.materials, public.material_assignments, public.announcements
-from anon;
+from anon, public;
 
 grant select, insert, update, delete on
   public.profiles, public.courses, public.classes, public.enrollments,
   public.materials, public.material_assignments, public.announcements
-to authenticated;
+to authenticated, service_role;

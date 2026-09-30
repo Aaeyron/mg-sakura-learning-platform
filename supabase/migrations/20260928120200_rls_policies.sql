@@ -122,7 +122,12 @@ language plpgsql
 set search_path = ''
 as $$
 begin
-  if current_user = 'authenticated' and not private.is_admin() then
+  -- Two separate IFs so is_admin() only runs for app requests (the secret
+  -- key's role has no access to the private schema).
+  if current_user <> 'authenticated' then
+    return new;
+  end if;
+  if not private.is_admin() then
     if new.id is distinct from old.id
       or new.email is distinct from old.email
       or new.role is distinct from old.role

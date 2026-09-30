@@ -72,6 +72,8 @@ supabase/
   - `npx supabase db push` — apply new migrations to the linked project
   - `npx supabase gen types typescript --linked > src/lib/supabase/database.types.ts` — regenerate types after every schema change
   - `npx supabase db query --linked -f supabase/scripts/test_rls.sql` — security check (rolls back; report comes back as the error message). Update it when rules change.
+- Project setting: **"Automatically expose new tables" is OFF**, so every new table needs explicit grants in its migration: `grant select, insert, update, delete ... to authenticated, service_role;` and nothing to `anon`. RLS must be enabled with policies for every table.
+- After schema changes, also run `npx supabase db advisors --linked` and fix new warnings. Known, intentional: `complete_password_change()` is callable by signed-in users.
 - Helper functions for security rules live in the `private` schema (not exposed by the API) and are `security definer` with `set search_path = ''`.
 
 ## Secrets and keys
@@ -112,12 +114,17 @@ Clean, friendly, Japanese-inspired, lots of white space, simple readable fonts.
 - **Light sakura pink** (`--color-sakura-50/100/200`) — backgrounds and highlights only, never for text. In shadcn this is `secondary`, `accent`, `sidebar`, and the focus `ring`.
 - Primary UI language: English (Japanese text appears in lesson content; use `--font-japanese` / the `font-jp` class).
 
+## Local quirks
+
+- The project lives in a OneDrive folder. If `npm run build` fails with `EPERM ... unlink '.next\...'`, delete the `.next` folder (it's only a build cache) and build again.
+
 ## How to work with me
 
 - I'm building this step by step. Before big changes, show a short plan and wait for my OK.
 - Work one phase at a time. Don't jump ahead.
 - Explain what you changed and why in simple terms — I'm still learning.
 - Keep secrets in `.env.local` (git-ignored); never commit keys. `.env.example` lists the variables with placeholder values.
+- **Commit and push after each step that works**: when build + lint pass, or when a phase is done and I've checked it. Use a clear commit message. Before every commit, check the staged files: `.env.local` (or any `.env*` except `.env.example`) must not be included, and no real keys (`sb_secret_…`, real `sb_publishable_…`, database passwords, access tokens) may appear in the diff. If anything looks like a key, stop and ask.
 - Write SQL migrations as files in `supabase/migrations/`.
 
 ## Build phases

@@ -5,3 +5,7 @@ dist
 build
 coverage
 package-lock.json
+
+# generated / CLI files
+src/lib/supabase/database.types.ts
+supabase/.temp

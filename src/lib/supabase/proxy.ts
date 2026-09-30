@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import type { Database } from "./database.types";
 import { getSupabaseEnv, hasSupabaseEnv } from "./env";
 
 // Runs before each page request (called from src/proxy.ts). It refreshes the
@@ -14,7 +15,7 @@ export async function updateSession(request: NextRequest) {
   const { url, publishableKey } = getSupabaseEnv();
   let response = NextResponse.next({ request });
 
-  const supabase = createServerClient(url, publishableKey, {
+  const supabase = createServerClient<Database>(url, publishableKey, {
     cookies: {
       getAll() {
         return request.cookies.getAll();
